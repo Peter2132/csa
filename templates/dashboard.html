@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Dashboard</h2>
+        <h4 class="mb-3">Public Key: {{ public_key }}</h4>
+        <h4 class="mb-3">Balance: {{ balance }} wei</h4>
+
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <a class="nav-link active" id="balance-tab" data-toggle="tab" href="#balance" role="tab" aria-controls="balance" aria-selected="true">Balance</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="withdraw-tab" data-toggle="tab" href="#withdraw" role="tab" aria-controls="withdraw" aria-selected="false">Withdraw</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="create-estate-tab" data-toggle="tab" href="#create-estate" role="tab" aria-controls="create-estate" aria-selected="false">Create Estate</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="update-estate-tab" data-toggle="tab" href="#update-estate" role="tab" aria-controls="update-estate" aria-selected="false">Update Estate Status</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="create-ad-tab" data-toggle="tab" href="#create-ad" role="tab" aria-controls="create-ad" aria-selected="false">Create Advertisement</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="update-ad-tab" data-toggle="tab" href="#update-ad" role="tab" aria-controls="update-ad" aria-selected="false">Update Advertisement Status</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="buy-estate-tab" data-toggle="tab" href="#buy-estate" role="tab" aria-controls="buy-estate" aria-selected="false">Buy Estate</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="get-estates-tab" data-toggle="tab" href="#get-estates" role="tab" aria-controls="get-estates" aria-selected="false">Get Estates</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="get-ads-tab" data-toggle="tab" href="#get-ads" role="tab" aria-controls="get-ads" aria-selected="false">Get Advertisements</a>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="balance" role="tabpanel" aria-labelledby="balance-tab">
+                
+            </div>
+            <div class="tab-pane fade" id="withdraw" role="tabpanel" aria-labelledby="withdraw-tab">
+                <form method="POST" action="/withdraw/{{ public_key }}">
+                    <div class="form-group">
+                        <label for="to">Recipient Address:</label>
+                        <input type="text" class="form-control" id="to" name="to" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="amount">Amount (wei):</label>
+                        <input type="number" class="form-control" id="amount" name="amount" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Withdraw</button>
+                </form>
+            </div>
+            <div class="tab-pane fade" id="create-estate" role="tabpanel" aria-labelledby="create-estate-tab">
+                <form method="POST" action="/create_estate/{{ public_key }}">
+                    <div class="form-group">
+                        <label for="square">Square (m2):</label>
+                        <input type="number" class="form-control" id="square" name="square" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="rooms">Rooms:</label>
+                        <input type="number" class="form-control" id="rooms" name="rooms" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="es_type">Estate Type:</label>
+                        <input type="number" class="form-control" id="es_type" name="es_type" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Create Estate</button>
+                </form>
+            </div>
+            <div class="tab-pane fade" id="update-estate" role="tabpanel" aria-labelledby="update-estate-tab">
+                <form method="POST" action="/update_estate_status/{{ public_key }}">
+                    <div class="form-group">
+                        <label for="estate_id">Estate ID:</label>
+                        <input type="number" class="form-control" id="estate_id" name="estate_id" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="new_status">New Status (true/false):</label>
+                        <input type="checkbox" class="form-control" id="new_status" name="new_status">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update Estate Status</button>
+                </form>
+            </div>
+            
+            <div class="tab-pane fade" id="create-ad" role="tabpanel" aria-labelledby="create-ad-tab">
+                <form method="POST" action="/create_ad/{{ public_key }}">
+                    <div class="form-group">
+                        <label for="estate_id">Estate ID:</label>
+                        <input type="number" class="form-control" id="estate_id" name="estate_id" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="price">Price (wei):</label>
+                        <input type="number" class="form-control" id="price" name="price" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Create Advertisement</button>
+                </form>
+            </div>
+            
+            <div class="tab-pane fade" id="update-ad" role="tabpanel" aria-labelledby="update-ad-tab">
+                <form method="POST" action="/update_ad_status/{{ public_key }}">
+                    <div class="form-group">
+                        <label for="ad_id">Advertisement ID:</label>
+                        <input type="number" class="form-control" id="ad_id" name="ad_id" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="new_status">New Status (0 - Open, 1 - Closed):</label>
+                        <select class="form-control" id="new_status" name="new_status">
+                            <option value="0">Open</option>
+                            <option value="1">Closed</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update Advertisement Status</button>
+                </form>
+            </div>
+            
+            <div class="tab-pane fade" id="buy-estate" role="tabpanel" aria-labelledby="buy-estate-tab">
+                <form method="POST" action="/buy_estate/{{ public_key }}">
+                    <div class="form-group">
+                        <label for="ad_id">Advertisement ID:</label>
+                        <input type="number" class="form-control" id="ad_id" name="ad_id" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="value">Value (wei):</label>
+                        <input type="number" class="form-control" id="value" name="value" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Buy Estate</button>
+                </form>
+            </div>
+            
+            <div class="tab-pane fade" id="get-estates" role="tabpanel" aria-labelledby="get-estates-tab">
+                <a href="/get_estates/{{ public_key }}" class="btn btn-primary">Get Estates</a>
+            </div>
+            
+            <div class="tab-pane fade" id="get-ads" role="tabpanel" aria-labelledby="get-ads-tab">
+                <a href="/get_ads/{{ public_key }}" class="btn btn-primary">Get Advertisements</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

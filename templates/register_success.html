@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Регистрация успешно завершена</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Регистрация успешно завершена</h2>
+        <div class="alert alert-success">
+            Ваш новый адрес аккаунта: <br>
+            <span id="new_account_address">{{ address }}</span>
+            <button type="button" class="btn btn-secondary" onclick="copyAddress()">Копировать</button>
+        </div>
+        <p>Перейдите на страницу авторизации, чтобы войти в свой аккаунт.</p>
+        <a href="/" class="btn btn-primary">Авторизация</a>
+    </div>
+
+    <script>
+    function copyAddress() {
+        var copyText = document.getElementById("new_account_address");
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); 
+        document.execCommand("copy");
+        alert("Адрес аккаунта скопирован!");
+    }
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
